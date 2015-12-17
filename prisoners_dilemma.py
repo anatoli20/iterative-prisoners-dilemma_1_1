@@ -10,9 +10,6 @@ to both players.
 play_tournament() executes the tournament and stores output in tournament.txt
 
 Players should each code their strategies in their assigned section of code.
-
-Aggregated results are stored in tournament.txt
-
 Unpublished work (c)2013 Project Lead The Way
 CSE Project 1.3.5 Collaborating on a Project
 Draft, Do Not Distribute
@@ -116,6 +113,8 @@ def get_action(player, history, opponent_history, score, opponent_score, getting
             return 'c'
 
     
+    
+    
         
             
                 
@@ -125,14 +124,18 @@ def get_action(player, history, opponent_history, score, opponent_score, getting
     ######
     #
     #This example player always betrays.      
-    elif player == 1:
+    
+    if player == 1:
         if getting_team_name:
-            return 'backstabber'
+            return 'betray every 2nd round'
         else:
-            return 'b'
-
-
-
+            # use history, opponent_history, score, opponent_score
+            # to compute your strategy
+            size = len(history)
+            if(size%2==1): #the number of rounds played is a multiple of 2
+                return 'c'
+            else:
+                return 'b'
 
 
 
@@ -143,7 +146,7 @@ def get_action(player, history, opponent_history, score, opponent_score, getting
     #   
     #This example player is silent at first and then 
     #only betrays if they were a sucker last round.
-    elif player == 2:
+    elif player == 4:
         if getting_team_name:
             return 'loyal vengeful'
         else:
@@ -199,14 +202,14 @@ def get_action(player, history, opponent_history, score, opponent_score, getting
     ######
     ######
     #
-    elif player == 4:
+    elif player == 2:
         if getting_team_name:
-            return 'betray every 3rd round'
+            return 'betray every 5th round'
         else:
             # use history, opponent_history, score, opponent_score
             # to compute your strategy
             size = len(history)
-            if(size%3==0): #the number of rounds played is a multiple of 3
+            if(size%5==0): #the number of rounds played is a multiple of 5
                 return 'c'
             else:
                 return 'b'
@@ -629,8 +632,8 @@ def play_tournament(num_players):
             moves_table[player2][player1] = moves2
             
             #accumulate the results for the two players
-            scores[player1] += score1*1.0/len(moves1)#ends up same as column sum
-            scores[player2] += score2*1.0/len(moves2)#ends up same as column sum
+            scores[player1] += score1*-2.0/len(moves1)#ends up same as column sum
+            scores[player2] += score2*-5.0/len(moves2)#ends up same as column sum
      
     '''report round-level results in a data file'''
     use_datafile=True
@@ -725,3 +728,4 @@ def play_tournament(num_players):
                str(int(scores[player])/num_players) , ' points: ',
                team_names[player])
     
+
