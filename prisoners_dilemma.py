@@ -127,12 +127,12 @@ def get_action(player, history, opponent_history, score, opponent_score, getting
     
     if player == 1:
         if getting_team_name:
-            return 'betray every 2nd round'
+            return 'betray every 3rd round'
         else:
             # use history, opponent_history, score, opponent_score
             # to compute your strategy
             size = len(history)
-            if(size%2==1): #the number of rounds played is a multiple of 2
+            if(size%3==0): #the number of rounds played is a multiple of 2
                 return 'c'
             else:
                 return 'b'
@@ -204,12 +204,12 @@ def get_action(player, history, opponent_history, score, opponent_score, getting
     #
     elif player == 2:
         if getting_team_name:
-            return 'betray every 5th round'
+            return 'betray every 2nd round'
         else:
             # use history, opponent_history, score, opponent_score
             # to compute your strategy
             size = len(history)
-            if(size%5==0): #the number of rounds played is a multiple of 5
+            if(size%2==0): #the number of rounds played is a multiple of 2
                 return 'c'
             else:
                 return 'b'
@@ -632,8 +632,8 @@ def play_tournament(num_players):
             moves_table[player2][player1] = moves2
             
             #accumulate the results for the two players
-            scores[player1] += score1*-2.0/len(moves1)#ends up same as column sum
-            scores[player2] += score2*-5.0/len(moves2)#ends up same as column sum
+            scores[player1] += score2*0.2/len(moves1) #ends up same as column sum
+            scores[player2] += score2*-5.0/len(moves2) #ends up same as column sum
      
     '''report round-level results in a data file'''
     use_datafile=True
@@ -727,5 +727,3 @@ def play_tournament(num_players):
         print('player ' + str(player) , ': ' , 
                str(int(scores[player])/num_players) , ' points: ',
                team_names[player])
-    
-
